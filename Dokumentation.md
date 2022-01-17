@@ -36,11 +36,18 @@ Anderenfalls sendet er:
 Implementieren Sie den Server auf Port 7777 sowie einen Client zum Testen.
 
 
-## Aufgabe 1a
+## Tipps 
 
-Implementieren Sie eine Java-L�sung f�r die enter- und exit-Methoden als Erzeuger/Verbraucher-Problem.
+- Implementieren Sie den Server als Non-Persistent Server und passen Sie den Client entsprechend an.
+- Verwenden Sie die Filter-Streams PrintWriter und BufferedReader.
+- Verwenden Sie split aus der Klasse String zum Zerlegen der Nachrichten.
+- Verwenden Sie die Klassen FileReader und FileWriter zum Zugriff auf die Dateien:
+- new BufferedReader(new FileReader(filename))
+- new PrintWriter(new FileWriter(filename))
+- Erzeugen Sie den eindeutigen Schl ussel mithilfe eines Zufallszahlengenerators.
 
-### Implememtation - Semaphorenmanagement
+
+### Implememtation - Server
 
 In der Aufgabe werden zwei Semaphoren benutzt, einen, der mit 1 initialisiert ist (sharedTrack) und einen, der mit 0 initialisiert ist (lock). Der Semaphor, der noch eine Ressource frei hat, wird f�r Lok0 zum Betreten des gemeinsamen Abschnittes genutzt, der andere f�r Lok1. Dies verhindert, dass Lok1 beginnt, bevor Lok0 den ABschnitt befahren konnte.
 
