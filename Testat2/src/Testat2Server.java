@@ -27,8 +27,8 @@ public class Testat2Server {
 	
 	public String generateKey() {
 		String key = "";
-		//Zufälligen Schlüssel generieren
-		for(int i = 0; i <= 16; i++) {
+		//Zufälligen 16-Stelligen Schlüssel generieren
+		for(int i = 0; i <= 15; i++) {
 			int randomNumber = (int) (Math.random() * 8);
 			key = key + randomNumber;
 		}
