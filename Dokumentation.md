@@ -1,7 +1,7 @@
 # Testat
 	
 Luis Maier - Matrikelnummer 7096964 |
-Mathis Neunzig - Matrikelnummer 2240587
+Christian Reitmeier - Matrikelnummer 2923922
 
 Beim Spielen mit ihrer neuen Holzeisenbahn legen Wladimir und Donald eine Strecke aus zwei Schienenkreisen, die in der Mitte ein gemeinsames Teilst�ck haben. Damit es keinen Streit gibt, beschlie�en die beiden,
 dass ihre Loks immer nur abwechselnd dieses gemeinsame Schienenst�ck befahren d�rfen.
