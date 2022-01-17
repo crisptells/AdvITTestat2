@@ -93,7 +93,7 @@ Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet.
 
 ### Beispiel 2
 
-Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - wrong command structure" vom Server ausgegeben
+Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Da der Server bei den Befehlen case sensitive ist, erkennt er die Befehle nicht und gibt die Fehlermeldung "FAILED - Befehl wurde nicht erkannt" an den Client zurück. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - wrong command structure" vom Server ausgegeben
 
 
 ``` 
