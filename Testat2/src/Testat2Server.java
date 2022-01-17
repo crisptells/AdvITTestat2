@@ -16,26 +16,36 @@ public class Testat2Server {
 	public final static int DEFAULT_PORT = 7777;
 	private ServerSocket server;
 	
+	
 	public Testat2Server(int port) {
 		try {
+			//Neuen ServerSocket erstellen, der auf dem Vorgegebenen Port 7777 läuft
 			server = new ServerSocket(port);
 			System.out.println("Server started on port: " + port);
 		} catch (IOException e) {
+			//Wenn Server nicht gestartet werden kann, soll die Fehlernachricht ausgegeben werden
 			System.err.println(e);
 		}
 	}
 	
+	/**
+	 * Generiert eine zufällige, 16-Stellen lange Zahlenfolge
+	 * @return 16-Stelliger, generierter Schlüssel
+	 */
 	public String generateKey() {
 		String key = "";
-		//ZufÃ¤lligen 16-Stelligen SchlÃ¼ssel generieren
+		//Zufälligen 16-Stelligen Schlüssel generieren
 		for(int i = 0; i <= 15; i++) {
 			int randomNumber = (int) (Math.random() * 8);
 			key = key + randomNumber;
 		}
-		System.out.println("key: " + key);
 		return key;
 	}
 	
+	/**
+	 * Startet den Server
+	 * @throws IOException, wenn nicht vom InputStream gelesen werden kann
+	 */
 	public void startListening() {
 		Socket connection = null;
 		PrintWriter out = null;
@@ -53,24 +63,23 @@ public class Testat2Server {
 				
 				//Auslesen des vom client geschickten textes
 				content = in.readLine();
-				System.out.println(content);
 				
 				//Zerlegen des Strings
 				String[] contentArray = content.split(" ", 2);
 				
-				
+				//Wenn der Text in mehr oder weniger als 2 Teile aufgeteilt wird, stimmt etwas mit der Anfrage nicht
 				if(contentArray.length != 2) {
 					answer = "FAILED - fehlerhafte Struktur";
 					out.println(answer);
 					out.close();
 					return;
 				}
-				
+				//Starten der Bearbeitung des Befehls
 				answer = fileOperation(contentArray);
 				out.println(answer);
 				out.close();
 				
-				//SchlieÃŸen der Verbindung nach jeder ausfÃ¼hrung eines Befehls
+				//Schließen der Verbindung nach jeder ausführung eines Befehls
 				if (connection != null) {
 					connection.close();
 				}
@@ -83,27 +92,30 @@ public class Testat2Server {
 	
 	/**
 	 * Nimmt den Befehl, der vom User eingegeben wurde und erstellt die Antwort
-	 * @param contentArray Array, der den Befehl und die Nachricht enthÃ¤lt
+	 * @param contentArray Array, der den Befehl und die Nachricht enthält
 	 * @return Antwort, die der Client geschickt bekommt
 	 * @throws FileNotFoundException Wenn Datei nicht gefunden wird
 	 */
 	public String fileOperation(String[] contentArray) {
 		String answer = "FAILED";
-		//ÃœberprÃ¼fen, ob SAVE oder GET
+		//Überprüfen, ob SAVE oder GET
 		if(contentArray[0].equals("SAVE")) {
-			//SchlÃ¼ssel generieren
+			//Schlüssel generieren
 			String key = generateKey();
 			
 		    //Text in Datei mit Namen des Keys speichern
 			try {
 				//Der Benutzername wird dynamisch erfasst
 				String userName = System.getProperty("user.name");
+				//Neue File mit dem Namen der "key" Variable .txt
 				File file = new File("C:/Users/"+userName+"/Desktop/Messages/"+key+".txt");
 				FileWriter fWriter= new FileWriter(file);
+				
+				//Textinhalt schreiben
 				fWriter.write(contentArray[1]);
 				fWriter.flush();
+				//Schreiben beenden
 				fWriter.close();
-				System.out.println("sucess");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -125,13 +137,14 @@ public class Testat2Server {
 		        }
 		        myReader.close();
 		        
-		        //Ausgelesenen String an Client zurÃ¼ckgeben
+		        //Ausgelesenen String an Client zurückgeben
 		        answer = ("OK "+ data);
 			} catch (FileNotFoundException e) {
-				//Wenn Datei nicht gefunden wird, wird FAILED an den Client zurÃ¼ckgegeben
-				answer = "FAILED - Kein gÃ¼ltiger SchlÃ¼ssel"
+				//Wenn Datei nicht gefunden wird, wird FAILED an den Client zurückgegeben
+				answer = "FAILED - Kein gültiger Schlüssel";
 		    }
 		} else {
+			//Wenn ein anderer Befehl als SAVE oder GET mitgegeben wird
 			answer = "FAILED - Befehl wurde nicht erkannt";
 		}
 		return answer;
@@ -143,7 +156,7 @@ public class Testat2Server {
 		if (args.length > 0) {
 				port = Integer.parseInt(args[0]);
 		}
-		
+		//Starten des Servers auf dem Vorgegebenen Port
 		Testat2Server messageServer = new Testat2Server(port);
 		messageServer.startListening();
 	}

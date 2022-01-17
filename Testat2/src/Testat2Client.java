@@ -10,11 +10,14 @@ public class Testat2Client {
 	
 	public static final int serverPort = 7777;
 	
+	/**
+	 * Main-Methode des Clients
+	 * @param args Argumente, mit dem das Programm gestartet wird
+	 * @throws IOException, wenn es Probleme mit InputStreams oder OutputStreams gibt
+	 */
 	public static void main(String[] args) {
+		//Der Host is Lokal, daher "localhost"
 		String hostname = "localhost";
-		
-		if (args.length > 0) {hostname = args[0];}
-		
 		PrintWriter networkOut = null;
 		BufferedReader networkIn = null;
 		Socket s = null;
@@ -26,7 +29,7 @@ public class Testat2Client {
 			//In Endlosschleife auf Benutzereingabe warten
 			while(true) {
 				
-				//Auslesen der Zeile. Wenn Zeile = . dann beenden des Clients
+				//Auslesen der Zeile. Wenn Zeile "." dann beenden des Clients
 				String theLine = userIn.readLine();
 				if (theLine.equals(".")) break;
 				
