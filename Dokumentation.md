@@ -47,195 +47,57 @@ Implementieren Sie den Server auf Port 7777 sowie einen Client zum Testen.
 - Erzeugen Sie den eindeutigen Schl ussel mithilfe eines Zufallszahlengenerators.
 
 
-### Implememtation - Server
+### Beispiel 1
 
-In der Aufgabe soll ein Non-Persistent Server genutzt werden und der Client dazu angepasst werden...
+Im ersten Beispiel wird mit SAVE der Text "Hello World!" gespeichert. Daraufhin sollte der Server einen zufälligen 16-Stelligen Schlüssel generieren. Den Text "Hello World!" speichert er in einer Datei im "Messages/" Verzeichniss auf dem Desktop. Der generierte Schlüssel stellt den Dateinamen dar. Ist dieser Vorgang abgeschlossen, schickt der Server dem Client den zuvor generierten Schlüssel zu.
 
-In der Aufgabe werden zwei Semaphoren benutzt, einen, der mit 1 initialisiert ist (sharedTrack) und einen, der mit 0 initialisiert ist (lock). Der Semaphor, der noch eine Ressource frei hat, wird f�r Lok0 zum Betreten des gemeinsamen Abschnittes genutzt, der andere f�r Lok1. Dies verhindert, dass Lok1 beginnt, bevor Lok0 den ABschnitt befahren konnte.
 
-``` java
-	void enterLok0() throws InterruptedException {
-		sharedTrack.acquire();
-	}
-	void enterLok1() throws InterruptedException {
-		lock.acquire();
-	}
-	void exitLok0() {
-		lock.release();
-	}
-	void exitLok1() {
-		sharedTrack.release();
-	}
-
+``` 
+SAVE Hello World!
+KEY 6230216163552060
 ```
+![image](https://user-images.githubusercontent.com/53625452/149752387-e3f518aa-3071-4f95-8e28-2adac162e563.png)
 
-### Implementation - Beispiel 1
+Auf diese Datei kann der Client nun mit dem GET Befehl und dem Schlüssel zugreifen. Der Server sucht im "Messages/" Verzeichniss, ob eine Datei gefunden wird, deren Dateiname mit dem Schlüssel übereinstimmt. Ist das der Fall, wird diese Datei ausgelesen und der Inhalt mit einem Vorangestellten "OK" an den Client zurückgesendet.
 
-Im ersten Beispiel wird durch das Keyword SAVE ein Text eingegeben...
-
-Im ersten Beispiel ist Lok0 schneller, weshalb Lok0 auch zuerst den gemeinsamen Abschnitt befahren will und bef�hrt. Da in der L�sung aber gefordert ist, dass Lok0 immer zuerst den gemeinsamen Abschnitt bef�hrt, muss der LokThread dies ber�cksichtigen. Daher gibt es einen Semaphore(1, true), den Lok0 aquired, wenn diese den Abschnitt befahren will. Lok1 hat einen anderen Semaphore(0, true), der von Anfang an "voll" ist und der erst durch das Durchfahren von Lok0 freigeschaltet wird. 
-
-``` java
-	public static void start() {
-		
-		Lok l = new Lok();	
-
-		LokThread lok0 = new LokThread(0, l, 1.1D);
-		LokThread lok1 = new LokThread(1, l, 1.0D);
-		
-		lok0.start();
-		lok1.start();
-		
-	}
-```
-
-### Ausgabe - Beispiel 1
-
-``` java
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
+``` 
+GET 6230216163552060
+OK Hello World!
 ```
 
 ### Auswertung - Beispiel 1
 
-Lok0 startet zuerst und betritt den gemeinsamen Gleisabschnitt auch zuerst - genau das, was in der Aufgabe auch gefordert war. Da Lok0 etwas schneller ist als Lok1, welche nach Lok0 den gemeinsamen Abschnitt betritt, kommt Lok0 in der Regel zu Beginn immer vor Lok1 an der Weiche an und kann den Abschnitt ohne Probleme betreten. 
-Wenn Lok0 den gemeinsamen Gleisabschnitt bef�hrt, kann Lok1 wegen dem "lock"-Semaphor, der mit 0 initialisiert ist, nicht betreten. Erst beim Ausfahren von Lok0 wird der Counter vom "lock"-Semaphor auf 1 gesetzt, was Lok1 das Einfahren in den gemeinsamen Abschnitt erm�glicht. Dabei wird der Counter von "lock" wieder auf 0 gesetzt. Lok0 kann den gemeinsamen Gleisabschnitt zu Beginn betreten, da dieser nicht mit dem "lock"-Semaphor beim Einfahren arbeitet, sondern den "sharedTrack"-Semaphor, der mit 1 initialisiert wird. Lok1 setzt nach dem Durchfahren des gemeinsamen Abschnitts den Counter von diesem wieder auf 1, damit Lok0 wieder einfahren kann. 
+Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet. Er generiert einen zufälligen 16-Stelligen Schlüssel und benennt die Datei, die den Text beinhaltet, danach. Diese Datei wird im Verzeichniss "Messages/" abgespeichert. Beim Aufruf des Clients durch den GET-Befehl wird die Datei anhand ihres Namens und des Schlüssels, den der Client mitgegeben hat, gefunden. Danach wird der Inhalt ausgelesen und dem Client zurückgeschickt.
 
-### Implementation - Beispiel 2
 
-Im zweiten Beispiel wird durch einen Tippfehler FAILED geworfen...
+### Beispiel 2
 
-Im zweiten Beispiel wird Lok1 schneller gemacht und der Thread wird zuerst gestartet. Trotzdem soll gegeben sein, dass Lok0 zuerst den gemeinsamen Abschnitt betritt.
+Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Da der Server bei den Befehlen case sensitive ist, erkennt er die Befehle nicht und gibt die Fehlermeldung "FAILED - Befehl wurde nicht erkannt" an den Client zurück. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - fehlerhafte Struktur" vom Server ausgegeben.
 
-``` java
-	public static void start() {
-		
-		Lok l = new Lok();	
 
-		LokThread lok0 = new LokThread(0, l, 1.0D);
-		LokThread lok1 = new LokThread(1, l, 1.1D);
-
-		lok1.start();
-		lok0.start();
-		
-	}
-```
-
-### Ausgabe - Beispiel 2
-
-``` java
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
+``` 
+SaVE Hello World!
+FAILED - Befehl wurde nicht erkannt
+GeT 6230216163552060
+FAILED - Befehl wurde nicht erkannt
+SAVEHelloWorld!
+FAILED - fehlerhafte Struktur
 ```
 
 ### Auswertung - Beispiel 2
 
-Im zweiten Beispiel wird sichtbar, wie die Semaphoren "sharedTrack" und "lock" wirklich arbeiten. Lok1 f�hrt schneller und erreicht die Weiche schneller, muss jedoch Lok0 vor lassen. Da Lok1 zum Einfahren den "lock"-Semaphor benutzt, der mit 0 initialisiert wurde, kann Lok1 nicht einfahren, bis Lok0 beim Verlassen den "lock"-Semaphor-Counter auf 1 setzt. Dies hindert Lok1 daran, zu Beginn als erstes den gemeinsamen Gleisabschnitt zu befahren. Danach m�ssen die Loks nur warten, bis der Abschnitt frei ist, damit sie einfahren k�nnen.
+Der Server reagiert auch auf falsche Eingaben. Zum einen wirft er die Fehlermeldung "FAILED - Befehl wurde nicht erkannt", wenn der Befehl falsch geschrieben ist. Zum anderen wird die Fehlermeldung "FAILED - fehlerhafte Struktur" ausgelöst, wenn die Anfrage des Clients nicht den syntaktischen Anforderungen entspricht.
 
-### Implementation - Beispiel 3
 
-Im dritten Beispiel ist Lok0 um ein Vielfaches schneller, welches dazu f�hren k�nnte, dass Lok0 mehrfach den gemeinsamen Abschnitt bef�hrt. Dies soll jedoch verhindert werden, da es hei�t, die Strecke soll abwechselnd befahren werden. Ob hier jetzt Lok0 oder Lok1 startet ist egal, Lok0 startet immer als Erste (siehe Beispiele 1 und 2).
+### Beispiel 3
 
-``` java
-	
-	public static void start() {
-	
-		Lok l = new Lok();	
-
-		LokThread lok0 = new LokThread(0, l, 10.0D);
-		LokThread lok1 = new LokThread(1, l, 1.0D);
-
-		lok0.start();
-		lok1.start();
-		
-	}
+Im dritten Beispiel wird ein Fehlerhafter Schlüssel vom Client mitgegeben, den der Server nicht im "Messages/" Verzeichniss findet. Hierbei wird die "FileNotFoundException" ausgelöst und der Server schickt die Antwort "FAILED" an den Client zurück.
 
 ```
-
-### Ausgabe - Beispiel 3
-
-``` java
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-
+GET 6230216163552061
+FAILED
 ```
 
 ### Auswertung - Beispiel 3
 
-Durch die beiden getrennten Semaphoren, k�nnen die Z�ge nur streng abwechselnd den Abschnitt befahren. 
-
-
-		}
-		mutex.release();
-	}
-	
-	void enterLok1() throws InterruptedException {
-		mutex.acquire();
-		if(next == 1) {
-			priv[1].release();
-		} else {
-			state[1] = WAITING;
-		}
-		mutex.release();
-		priv[1].acquire();
-	}
-	
-	void exitLok1() throws InterruptedException {
-		mutex.acquire();
-		next = 0;
-		if(state[0] == WAITING) {
-			state[0] = DRIVING;
-			priv[0].release();
-		}
-		mutex.release();
-	}
-```
-
+Der Client sendet einen falschen Schlüssel, den es nicht im "Message/" Verzeichniss gibt. Infolgedessen kann der Server auch keine Datei mit dem Namen finden und die "FileNotFoundException" ausgelöst. Daraufhin gibt der Server "FAILED" an den Client zurück.
