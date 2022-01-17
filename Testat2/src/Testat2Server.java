@@ -57,15 +57,17 @@ public class Testat2Server {
 				
 				//Zerlegen des Strings
 				String[] contentArray = content.split(" ", 2);
-				System.out.println("Befehl: "+contentArray[0]);
-				System.out.println("Text: "+contentArray[1]);
+				
 				
 				if(contentArray.length != 2) {
-					answer = "FAILED - wrong command structure";
+					answer = "FAILED - fehlerhafte Struktur";
 					out.println(answer);
 					out.close();
 					return;
 				}
+				
+				System.out.println("Befehl: "+contentArray[0]);
+				System.out.println("Text: "+contentArray[1]);
 				
 				answer = fileOperation(contentArray);
 				out.println(answer);
@@ -91,7 +93,9 @@ public class Testat2Server {
 			
 		    //Text in Datei mit Namen des Keys speichern
 			try {
-				File file = new File("C:/Users/Luis/Desktop/Messages/"+key+".txt");
+				//Der Benutzername wird dynamisch erfasst
+				String userName = System.getProperty("user.name");
+				File file = new File("C:/Users/"+userName+"/Desktop/Messages/"+key+".txt");
 				FileWriter fWriter= new FileWriter(file);
 				fWriter.write(contentArray[1]);
 				fWriter.flush();
@@ -108,7 +112,8 @@ public class Testat2Server {
 			String readKey = contentArray[1];
 			try {
 				//Datei mit dem Namen des Keys lokalisieren
-		        File myObj = new File("C:/Users/Luis/Desktop/Messages/"+readKey+".txt");
+				String userName = System.getProperty("user.name");
+		        File myObj = new File("C:/Users/"+userName+"/Desktop/Messages/"+readKey+".txt");
 		        
 		        //Mithilfe eines Scanners den Dateiinhalt auslesen und in data schreiben.
 		        Scanner myReader = new Scanner(myObj);
