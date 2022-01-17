@@ -68,23 +68,14 @@ In der Aufgabe soll ein Non-Persistent Server genutzt werden und der Client dazu
 
 ```
 
-### Implementation - Beispiel 1
+### Beispiel 1
 
-Im ersten Beispiel wird mit SAVE ein Text ...
+Im ersten Beispiel wird mit SAVE der Text "Hello World!" gespeichert. Daraufhin sollte der Server einen zufälligen 16-Stelligen Schlüssel generieren. Den Text "Hello World!" speichert er in einer Datei im "Messages/" Verzeichniss auf dem Desktop. Der generierte Schlüssel stellt den Dateinamen dar. Ist dieser Vorgang abgeschlossen, schickt der Server dem Client den zuvor generierten Schlüssel zu.
 
 
-``` java
-	public static void start() {
-		
-		Lok l = new Lok();	
-
-		LokThread lok0 = new LokThread(0, l, 1.1D);
-		LokThread lok1 = new LokThread(1, l, 1.0D);
-		
-		lok0.start();
-		lok1.start();
-		
-	}
+``` 
+SAVE Hello World!
+KEY 6230216163552060
 ```
 
 ### Ausgabe - Beispiel 1
