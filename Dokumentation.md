@@ -93,7 +93,7 @@ Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet.
 
 ### Beispiel 2
 
-Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Da der Server bei den Befehlen case sensitive ist, erkennt er die Befehle nicht und gibt die Fehlermeldung "FAILED - Befehl wurde nicht erkannt" an den Client zurück. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - wrong command structure" vom Server ausgegeben
+Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Da der Server bei den Befehlen case sensitive ist, erkennt er die Befehle nicht und gibt die Fehlermeldung "FAILED - Befehl wurde nicht erkannt" an den Client zurück. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - fehlerhafte Struktur" vom Server ausgegeben.
 
 
 ``` 
@@ -102,12 +102,13 @@ FAILED - Befehl wurde nicht erkannt
 GeT 6230216163552060
 FAILED - Befehl wurde nicht erkannt
 SAVEHelloWorld!
-FAILED - wrong command structure
+FAILED - fehlerhafte Struktur
 ```
 
 ### Auswertung - Beispiel 2
 
-Auswertung...
+Der Server reagiert auch auf falsche Eingaben. Zum einen wirft er die Fehlermeldung "FAILED - Befehl wurde nicht erkannt", wenn der Befehl falsch geschrieben ist. Zum anderen wird die Fehlermeldung "FAILED - fehlerhafte Struktur" ausgelöst, wenn die Anfrage des Clients nicht den syntaktischen Anforderungen entspricht.
+
 
 ### Beispiel 3
 
@@ -120,32 +121,4 @@ FAILED
 
 ### Auswertung - Beispiel 3
 
-Auswertung...
-
-
-		}
-		mutex.release();
-	}
-	
-	void enterLok1() throws InterruptedException {
-		mutex.acquire();
-		if(next == 1) {
-			priv[1].release();
-		} else {
-			state[1] = WAITING;
-		}
-		mutex.release();
-		priv[1].acquire();
-	}
-	
-	void exitLok1() throws InterruptedException {
-		mutex.acquire();
-		next = 0;
-		if(state[0] == WAITING) {
-			state[0] = DRIVING;
-			priv[0].release();
-		}
-		mutex.release();
-	}
-```
-
+Der Client sendet einen falschen Schlüssel, den es nicht im "Message/" Verzeichniss gibt. Infolgedessen kann der Server auch keine Datei mit dem Namen finden und die "FileNotFoundException" ausgelöst. Daraufhin gibt der Server "FAILED" an den Client zurück.
