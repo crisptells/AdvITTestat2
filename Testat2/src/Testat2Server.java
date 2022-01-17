@@ -27,7 +27,7 @@ public class Testat2Server {
 	
 	public String generateKey() {
 		String key = "";
-		//Zufälligen 16-Stelligen Schlüssel generieren
+		//ZufÃ¤lligen 16-Stelligen SchlÃ¼ssel generieren
 		for(int i = 0; i <= 15; i++) {
 			int randomNumber = (int) (Math.random() * 8);
 			key = key + randomNumber;
@@ -41,7 +41,7 @@ public class Testat2Server {
 		PrintWriter out = null;
 		BufferedReader in = null;
 		String content = "";
-		String answer = "";
+		String answer = "FAILED";
 		
 		while(true) {
 			try {
@@ -53,7 +53,7 @@ public class Testat2Server {
 				
 				//Auslesen des vom client geschickten textes
 				content = in.readLine();
-				System.out.println("Message: " + content);
+				System.out.println(content);
 				
 				//Zerlegen des Strings
 				String[] contentArray = content.split(" ", 2);
@@ -66,14 +66,11 @@ public class Testat2Server {
 					return;
 				}
 				
-				System.out.println("Befehl: "+contentArray[0]);
-				System.out.println("Text: "+contentArray[1]);
-				
 				answer = fileOperation(contentArray);
 				out.println(answer);
 				out.close();
 				
-				//Schließen der Verbindung nach jeder ausführung eines Befehls
+				//SchlieÃŸen der Verbindung nach jeder ausfÃ¼hrung eines Befehls
 				if (connection != null) {
 					connection.close();
 				}
@@ -84,11 +81,17 @@ public class Testat2Server {
 		}
 	}
 	
+	/**
+	 * Nimmt den Befehl, der vom User eingegeben wurde und erstellt die Antwort
+	 * @param contentArray Array, der den Befehl und die Nachricht enthÃ¤lt
+	 * @return Antwort, die der Client geschickt bekommt
+	 * @throws FileNotFoundException Wenn Datei nicht gefunden wird
+	 */
 	public String fileOperation(String[] contentArray) {
-		//Überprüfen, ob SAVE oder GET
+		String answer = "FAILED";
+		//ÃœberprÃ¼fen, ob SAVE oder GET
 		if(contentArray[0].equals("SAVE")) {
-			System.out.println("Befehl wurde als SAVE erkannt");
-			//Schlüssel generieren
+			//SchlÃ¼ssel generieren
 			String key = generateKey();
 			
 		    //Text in Datei mit Namen des Keys speichern
@@ -106,9 +109,8 @@ public class Testat2Server {
 			}
 			
 			//Send key to Client
-			return("KEY "+ key);
+			answer = ("KEY "+ key);
 		} else if(contentArray[0].equals("GET")) {
-			System.out.println("Befehl wurde als GET erkannt");
 			String readKey = contentArray[1];
 			try {
 				//Datei mit dem Namen des Keys lokalisieren
@@ -123,14 +125,16 @@ public class Testat2Server {
 		        }
 		        myReader.close();
 		        
-		        //Ausgelesenen String an Client zurückgeben
-		        return ("OK "+ data);
+		        //Ausgelesenen String an Client zurÃ¼ckgeben
+		        answer = ("OK "+ data);
 			} catch (FileNotFoundException e) {
-				//Wenn Datei nicht gefunden wird, wird FAILED an den Client zurückgegeben
-				return "FAILED";
+				//Wenn Datei nicht gefunden wird, wird FAILED an den Client zurÃ¼ckgegeben
+				answer = "FAILED - Kein gÃ¼ltiger SchlÃ¼ssel"
 		    }
-		} 
-		return "FAILED - Befehl wurde nicht erkannt";
+		} else {
+			answer = "FAILED - Befehl wurde nicht erkannt";
+		}
+		return answer;
 	}
 	
 	public static void main(String[] args) {

@@ -67,7 +67,7 @@ OK Hello World!
 
 ### Auswertung - Beispiel 1
 
-Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet. Er generiert einen zufälligen 16-Stelligen Schlüssel und benennt die Datei, die den Text beinhaltet, danach. Diese Datei wird im Verzeichniss "Messages/" abgespeichert. Beim Aufruf des Clients durch den GET-Befehl wird die Datei anhand ihres Namens und des Schlüssels, den der Client mitgegeben hat, gefunden. Danach wird der Inhalt ausgelesen und dem Client zurückgeschickt.
+Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet. Er generiert einen zufälligen 16-Stelligen Schlüssel und benennt die Datei, die den Text beinhaltet, nach diesem Schlüssel. Diese Datei wird im Ordner "Messages" auf dem Desktop abgespeichert. abgespeichert. Beim Aufruf des Clients durch den GET-Befehl wird die Datei anhand ihres Namens und des Schlüssels, den der Client mitgegeben hat, gefunden. Danach wird der Inhalt ausgelesen und dem Client zurückgeschickt.
 
 
 ### Beispiel 2
@@ -91,7 +91,7 @@ Der Server reagiert auch auf falsche Eingaben. Zum einen wirft er die Fehlermeld
 
 ### Beispiel 3
 
-Im dritten Beispiel wird ein Fehlerhafter Schlüssel vom Client mitgegeben, den der Server nicht im "Messages/" Verzeichniss findet. Hierbei wird die "FileNotFoundException" ausgelöst und der Server schickt die Antwort "FAILED" an den Client zurück.
+Im dritten Beispiel wird ein Fehlerhafter Schlüssel vom Client mitgegeben, zu dem der Server keine zugehörige Datei findet. Hierbei wird die "FileNotFoundException" ausgelöst und der Server schickt die Antwort "FAILED" an den Client zurück.
 
 ```
 GET 6230216163552061
