@@ -3,6 +3,8 @@
 Luis Maier - Matrikelnummer 7096964 |
 Christian Reitmeier - Matrikelnummer 2923922
 
+## Aufgabe
+
 Entwerfen Sie mit TCP einen Server, der Nachrichten speichert und zur Abfrage  uber das Netz bereit hält.
 Zum Ablegen einer Nachricht auf dem Server sendet ein Client einen String mit dem folgenden Format an
 den Server:
