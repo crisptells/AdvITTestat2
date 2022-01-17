@@ -91,94 +91,31 @@ OK Hello World!
 Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet. Er generiert einen zufälligen 16-Stelligen Schlüssel und benennt die Datei, die den Text beinhaltet, danach. Diese Datei wird im Verzeichniss "Messages/" abgespeichert. Beim Aufruf des Clients durch den GET-Befehl wird die Datei anhand ihres Namens und des Schlüssels, den der Client mitgegeben hat, gefunden. Danach wird der Inhalt ausgelesen und dem Client zurückgeschickt.
 
 
-### Implementation - Beispiel 2
+### Beispiel 2
 
-Im zweiten Beispiel wird die Message FAILED geworfen...
+Im zweiten Beispiel wird durch eine Fehlerhafte Eingabe der Befehle "SAVE" und "GET" die Message "FAILED - Befehl wurde nicht erkannt" geworfen. Hierbei erkennt der Server den jeweiligen Befehl nicht und führt deswegen auch keinen weiteren Code zum erstellen einer Datei oder eines Schlüssels aus. In den ersten zwei Fällen werden jeweils einmal der SAVE-Befehl und der GET-Befehl falsch geschrieben. Im dritten Fall wird kein Leerzeichen zwischen dem Befehl und dem Text gesetzt. Hier wird die Fehlermeldung "FAILED - wrong command structure" vom Server ausgegeben
 
 
-``` java
-	public static void start() {
-		
-		Lok l = new Lok();	
-
-		LokThread lok0 = new LokThread(0, l, 1.0D);
-		LokThread lok1 = new LokThread(1, l, 1.1D);
-
-		lok1.start();
-		lok0.start();
-		
-	}
-```
-
-### Ausgabe - Beispiel 2
-
-``` java
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
+``` 
+SaVE Hello World!
+FAILED - Befehl wurde nicht erkannt
+GeT 6230216163552060
+FAILED - Befehl wurde nicht erkannt
+SAVEHelloWorld!
+FAILED - wrong command structure
 ```
 
 ### Auswertung - Beispiel 2
 
 Auswertung...
 
-### Implementation - Beispiel 3
+### Beispiel 3
 
-drittes Beispiel...
-
-``` java
-	
-	public static void start() {
-	
-		Lok l = new Lok();	
-
-		LokThread lok0 = new LokThread(0, l, 10.0D);
-		LokThread lok1 = new LokThread(1, l, 1.0D);
-
-		lok0.start();
-		lok1.start();
-		
-	}
+Im dritten Beispiel wird ein Fehlerhafter Schlüssel vom Client mitgegeben, den der Server nicht im "Messages/" Verzeichniss findet. Hierbei wird die "FileNotFoundException" ausgelöst und der Server schickt die Antwort "FAILED" an den Client zurück.
 
 ```
-
-### Ausgabe - Beispiel 3
-
-``` java
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-
+GET 6230216163552061
+FAILED
 ```
 
 ### Auswertung - Beispiel 3
