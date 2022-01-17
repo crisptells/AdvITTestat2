@@ -88,7 +88,7 @@ OK Hello World!
 
 ### Auswertung - Beispiel 1
 
-Auswertung...
+Die SAVE-Anfrage des Clients wird vom Server erfolgreich erkannt und bearbeitet. Er generiert einen zufälligen 16-Stelligen Schlüssel und benennt die Datei, die den Text beinhaltet, danach. Diese Datei wird im Verzeichniss "Messages/" abgespeichert. Beim Aufruf des Clients durch den GET-Befehl wird die Datei anhand ihres Namens und des Schlüssels, den der Client mitgegeben hat, gefunden. Danach wird der Inhalt ausgelesen und dem Client zurückgeschickt.
 
 
 ### Implementation - Beispiel 2
