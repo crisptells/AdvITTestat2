@@ -79,6 +79,12 @@ KEY 6230216163552060
 ```
 ![image](https://user-images.githubusercontent.com/53625452/149751741-d9d7e25c-813c-4409-8712-244f342f611f.png)
 
+Auf diese Datei kann der Client nun mit dem GET Befehl und dem Schlüssel zugreifen. Der Server sucht im "Messages/" Verzeichniss, ob eine Datei gefunden wird, deren Dateiname mit dem Schlüssel übereinstimmt. Ist das der Fall, wird diese Datei ausgelesen und der Inhalt mit einem Vorangestellten "OK" an den Client zurückgesendet.
+
+``` 
+GET 6230216163552060
+OK Hello World!
+```
 
 ### Ausgabe - Beispiel 1
 
