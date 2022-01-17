@@ -3,14 +3,32 @@
 Luis Maier - Matrikelnummer 7096964 |
 Christian Reitmeier - Matrikelnummer 2923922
 
-Beim Spielen mit ihrer neuen Holzeisenbahn legen Wladimir und Donald eine Strecke aus zwei Schienenkreisen, die in der Mitte ein gemeinsames Teilst�ck haben. Damit es keinen Streit gibt, beschlie�en die beiden,
-dass ihre Loks immer nur abwechselnd dieses gemeinsame Schienenst�ck befahren d�rfen.
+Entwerfen Sie mit TCP einen Server, der Nachrichten speichert und zur Abfrage  uber das Netz bereit hält.
+Zum Ablegen einer Nachricht auf dem Server sendet ein Client einen String mit dem folgenden Format an
+den Server:
 
-Entwerfen Sie unter Verwendung von Semaphoren eine Steuerung f�r die beiden Loks. Beachten Sie dabei,
-dass die Loks unterschiedlich schnell sind. Eine Lok, welche die Weiche erreicht, jedoch noch nicht an der
-Reihe ist, muss warten, bis die andere Lok das Mittelst�ck verl�asst. Andererseits soll die Lok ohne zu warten
-weiterfahren, wenn sie die Weiche erreicht und klar ist, dass das Schienenst�ck f�r sie frei ist. Lok 0 soll zu
-Beginn das Mittelst�ck zuerst befahren.
+	SAVE beliebig langer String mit abschlie endem Zeilenende
+
+Der Server generiert nach dem Empfang einen neuen geeigneten eindeutigen Schl ussel (als String) und
+speichert die Nachricht in einer Datei, wobei der Schl ussel als Dateiname verwendet wird. Danach sendet
+der Server den Schl ussel zurück an den Client:
+	KEY schluessel
+
+Alle Dateien sollen auf dem Server auf dem Desktop im Verzeichnis ”Messages/”abgespeichert werden, das
+Sie vorher schon anlegen sollten.
+
+Zum Abrufen einer Nachricht sendet ein Client einen String:
+	GET schluessel
+
+an den Server, der daraufhin  uberpr uft, ob eine entsprechende Datei existiert.
+Falls ja, sendet er den Inhalt der Datei an den Client:
+	OK dateiinhalt
+
+Anderenfalls sendet er:
+	FAILED
+
+Implementieren Sie den Server auf Port 7777 sowie einen Client zum Testen.
+
 
 ## Aufgabe 1a
 
