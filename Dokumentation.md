@@ -70,7 +70,7 @@ In der Aufgabe soll ein Non-Persistent Server genutzt werden und der Client dazu
 
 ### Implementation - Beispiel 1
 
-Im ersten Beispiel wird durch das Keyword SAVE ein Text eingegeben...
+Im ersten Beispiel wird mit SAVE ein Text ...
 
 
 ``` java
@@ -117,7 +117,7 @@ Auswertung...
 
 ### Implementation - Beispiel 2
 
-Im zweiten Beispiel wird durch einen Tippfehler FAILED geworfen...
+Im zweiten Beispiel wird die Message FAILED geworfen...
 
 
 ``` java
