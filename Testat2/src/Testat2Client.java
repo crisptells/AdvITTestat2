@@ -20,21 +20,31 @@ public class Testat2Client {
 		Socket s = null;
 		
 		try {
+			//Eingabemöglichkeit für den Benutzer
 			BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 			
+			//In Endlosschleife auf Benutzereingabe warten
 			while(true) {
+				
+				//Auslesen der Zeile. Wenn Zeile = . dann beenden des Clients
 				String theLine = userIn.readLine();
 				if (theLine.equals(".")) break;
 				
+				//Verbindung zum Server herstellen
 				s = new Socket(hostname, serverPort);
 				
+				//Initialisieren des Writers und des Readers
 				networkIn = new BufferedReader(new InputStreamReader(s.getInputStream()));
 				networkOut = new PrintWriter(s.getOutputStream());
 				
+				//Eingegebene Zeile zum Server versenden
 				networkOut.println(theLine);
 				networkOut.flush();
+				
+				//Ankommende Zeile in die Konsole schreiben
 				System.out.println(networkIn.readLine());
 				
+				//Wegen Non-Persistent alle Verbindungen schließen
 				if(networkIn != null) {
 					networkIn.close();
 				}
