@@ -77,6 +77,8 @@ Im ersten Beispiel wird mit SAVE der Text "Hello World!" gespeichert. Daraufhin 
 SAVE Hello World!
 KEY 6230216163552060
 ```
+![image](https://user-images.githubusercontent.com/53625452/149751741-d9d7e25c-813c-4409-8712-244f342f611f.png)
+
 
 ### Ausgabe - Beispiel 1
 
