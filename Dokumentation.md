@@ -77,36 +77,13 @@ Im ersten Beispiel wird mit SAVE der Text "Hello World!" gespeichert. Daraufhin 
 SAVE Hello World!
 KEY 6230216163552060
 ```
-![image](https://user-images.githubusercontent.com/53625452/149751741-d9d7e25c-813c-4409-8712-244f342f611f.png)
+![image](https://user-images.githubusercontent.com/53625452/149752387-e3f518aa-3071-4f95-8e28-2adac162e563.png)
 
 Auf diese Datei kann der Client nun mit dem GET Befehl und dem Schlüssel zugreifen. Der Server sucht im "Messages/" Verzeichniss, ob eine Datei gefunden wird, deren Dateiname mit dem Schlüssel übereinstimmt. Ist das der Fall, wird diese Datei ausgelesen und der Inhalt mit einem Vorangestellten "OK" an den Client zurückgesendet.
 
 ``` 
 GET 6230216163552060
 OK Hello World!
-```
-
-### Ausgabe - Beispiel 1
-
-``` java
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok1 will den geteilten Abschnitt befahren!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
-Lok0 will den geteilten Abschnitt befahren!
-Lok0 f�hrt ein! Choo choo!
-Lok0 verl�sst den geteilten Abschnitt...
-Lok1 will den geteilten Abschnitt befahren!
-Lok1 f�hrt ein! Choo choo!
-Lok1 verl�sst den geteilten Abschnitt...
 ```
 
 ### Auswertung - Beispiel 1
