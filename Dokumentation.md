@@ -47,27 +47,6 @@ Implementieren Sie den Server auf Port 7777 sowie einen Client zum Testen.
 - Erzeugen Sie den eindeutigen Schl ussel mithilfe eines Zufallszahlengenerators.
 
 
-### Implememtation - Server
-
-In der Aufgabe soll ein Non-Persistent Server genutzt werden und der Client dazu angepasst werden...
-
-
-``` java
-	void enterLok0() throws InterruptedException {
-		sharedTrack.acquire();
-	}
-	void enterLok1() throws InterruptedException {
-		lock.acquire();
-	}
-	void exitLok0() {
-		lock.release();
-	}
-	void exitLok1() {
-		sharedTrack.release();
-	}
-
-```
-
 ### Beispiel 1
 
 Im ersten Beispiel wird mit SAVE der Text "Hello World!" gespeichert. Daraufhin sollte der Server einen zufälligen 16-Stelligen Schlüssel generieren. Den Text "Hello World!" speichert er in einer Datei im "Messages/" Verzeichniss auf dem Desktop. Der generierte Schlüssel stellt den Dateinamen dar. Ist dieser Vorgang abgeschlossen, schickt der Server dem Client den zuvor generierten Schlüssel zu.
